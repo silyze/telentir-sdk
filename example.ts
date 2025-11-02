@@ -1,19 +1,21 @@
 import "dotenv/config";
-import { ObjectManager } from "./lib/crypto";
-import { BrowserCrypto } from "@mojsoski/server-crypto";
-import { assertNonNull } from "@mojsoski/assert";
-import jose from "jose";
+import { crypto, Telentir } from "./lib";
 
 async function main() {
-  assertNonNull(process.env.TELENTIR_API_KEY, "TELENTIR_API_KEY");
+  const telentir = await Telentir.connect({
+    apiKey: process.env.TELENTIR_API_KEY!,
 
-  const objectManager = await ObjectManager.create(new BrowserCrypto(jose), {
-    apiKey: process.env.TELENTIR_API_KEY,
+    // what crypto implementation should we use? BrowserCrypto, NodeCrypto or some custom implementation
+    crypto: new crypto.BrowserCrypto(
+      // jose library for JWT generation (requirement for BrowserCrypto)
+      await import("jose")
+    ),
+
+    // this is optional (speeds up decryption)
+    keyCache: new crypto.InMemoryKeyCache(),
   });
 
-  console.log(
-    await objectManager.decryptObject("bb6a1b14-b6c6-4ef8-a28f-d88c75530d87")
-  );
+  console.log(await telentir.contacts.all());
 }
 
-main().then();
+void main();

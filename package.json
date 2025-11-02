@@ -1,6 +1,6 @@
 {
-  "name": "@silyze/telentir-sdk",
-  "version": "0.0.1",
+  "name": "telentir",
+  "version": "1.0.0",
   "description": "SDK for the Telentir API",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
@@ -12,11 +12,13 @@
     "@types/node": "^24.9.2",
     "dotenv": "^17.2.3",
     "jose": "^6.1.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.6"
   },
   "scripts": {
     "watch": "npx tsc --watch",
     "build": "npx tsc",
+    "test": "vitest run --exclude dist/**",
     "prepare": "npm run build",
     "version": "git add -A lib",
     "postversion": "git push && git push --tags",
