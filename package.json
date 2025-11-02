@@ -1,5 +1,5 @@
 {
-  "name": "telentir",
+  "name": "@silyze/telentir-sdk",
   "version": "1.0.0",
   "description": "SDK for the Telentir API",
   "main": "dist/lib/index.js",
